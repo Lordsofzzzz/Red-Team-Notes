@@ -1,76 +1,111 @@
-# Initial Access Notes
+# Reconnaissance Notes
 
 ## 📌 Introduction
-Initial access is the phase where an attacker gains a foothold in the target system or network. It involves exploiting vulnerabilities, using stolen credentials, or leveraging social engineering tactics.
+Reconnaissance (Recon) is the first phase of an attack where information about the target is gathered. It is crucial for identifying potential attack vectors.
 
-## 🛠 Techniques for Initial Access
+## 🛠 Types of Reconnaissance
+- **🔹 Passive Recon**: Gathering information without directly interacting with the target.
+- **🔹 Active Recon**: Engaging with the target to extract data.
 
-### 🔹 Phishing Attacks
-- **Spear Phishing (Email-based)**: Sending targeted emails with malicious attachments or links.
-  - Tools: `GoPhish`, `Evilginx2`, `Modlishka`
-  - Payloads: Malicious macros, HTA files, embedded links
-  - Common Techniques:
-    - Spoofed emails with fake sender addresses
-    - Credential harvesting using fake login pages
-    - Malicious attachments exploiting Office macros
-    - Embedded links leading to malware-hosting sites
-- **Spear Phishing (SMS & Voice Phishing - Smishing & Vishing)**: Using SMS or phone calls to trick users into revealing credentials.
-  - Tools: `Modlishka`, `EvilURL`, `Seeker`
-  - Techniques:
-    - Fake customer support calls impersonating banks or IT teams
-    - Sending SMS with malicious links to fake login portals
-    - Caller ID spoofing to appear legitimate
-- **Clone Phishing**: Resending a previously sent legitimate email but replacing links or attachments with malicious ones.
-- **Phishing through Social Media**:
-  - Impersonating trusted sources on LinkedIn, Twitter, or Facebook
-  - Using fake job offers with malicious attachments
-  - Sending direct messages with phishing links
-- **Compromised Accounts for Internal Phishing**:
-  - Using previously breached email accounts to send phishing emails within an organization
-- **HTML Smuggling**:
-  - Embedding malicious scripts inside HTML attachments to bypass email security filters
-  - `Example:` `<a download='malware.html' href='data:text/html;base64,...'>Click Here</a>`
+---
 
-### 🔹 Exploiting Public-Facing Applications
-- Targeting vulnerable web applications, APIs, or services.
-  - Tools: `Metasploit`, `SQLmap`, `Burp Suite`, `Fuff`, `Dirb`, `Dirbuster`, `Nikto`, `Wfuzz`
-  - Exploits:
-    - **SQL Injection (SQLi)**: Extracting data by injecting malicious SQL queries.
-      - Command: `sqlmap -u 'http://target.com?id=1' --dbs`
-    - **Remote Code Execution (RCE)**: Exploiting vulnerable applications to execute commands.
-      - Command: `msfconsole -x 'use exploit/multi/http/struts2_code_exec'`
-    - **Command Injection**: Running unauthorized commands on a system.
-      - Example Payload: `; cat /etc/passwd`
-    - **Path Traversal**: Accessing restricted files by manipulating file paths.
-      - Example Payload: `../../../../etc/passwd`
-    - **Cross-Site Scripting (XSS)**: Injecting malicious JavaScript to steal cookies or hijack sessions.
-      - Example: `<script>alert('XSS')</script>`
+## 🔍 Passive Reconnaissance
+**🎯 Goal:** Collect information without alerting the target.
 
-### 🔹 Physical & Insider Threats
-- **USB Drops & HID Attacks**: Using malicious USB devices to execute unauthorized scripts.
-  - Tools: `Rubber Ducky`, `Bash Bunny`, `OMG Cable`
-- **Rogue Wi-Fi Access Points**: Setting up fake Wi-Fi networks to steal credentials.
-  - Tools: `WiFi Pineapple`, `Airgeddon`, `Bettercap`
-- **Badge Cloning & RFID Attacks**: Cloning RFID access cards to gain unauthorized entry.
-  - Tools: `Proxmark3`, `Flipper Zero`, `ChameleonMini`
-- **Social Engineering (On-Site Attacks)**: Impersonation, tailgating, and convincing employees to reveal sensitive information.
-- **Hidden Cameras & Keyloggers**: Placing hidden cameras or installing hardware keyloggers to capture keystrokes.
-  - Tools: `KeyGrabber`, `Spy Cameras`, `WiFi Keyloggers`
+### 🛠 Techniques:
+- **🕵️‍♂️ OSINT (Open-Source Intelligence):**
+  - 🔍 Google Dorking: `site:target.com filetype:pdf`
+  - 🌐 WHOIS lookup: `whois target.com`
+  - 📢 Social Media profiling (LinkedIn, Twitter, etc.)
+  - 🖼 Reverse Image Search (Google, TinEye)
+  - 🔎 Shodan: `shodan search target.com`
+  - 🔥 Censys: `censys search target.com`
+  - 📄 FOCA: Metadata analysis for documents
+  - 🕸 Maltego: Graph-based OSINT tool
+  - 📚 GHDB (Google Hacking Database) for advanced search queries
+  - 🔗 OSINT Framework: `https://osintframework.com/`
+  - 🔐 Check Breached Data: `Have I Been Pwned (HIBP)` API
+  - 📧 Email harvesting: `hunter.io`, `theHarvester`
+- **🌍 Subdomain Enumeration:**
+  - 🏷 `crt.sh`: `https://crt.sh/?q=target.com`
+  - 🖥 `Sublist3r`: `python sublist3r.py -d target.com`
+  - 🛠 `Amass`: `amass enum -d target.com`
+- **🖼 Metadata Extraction:**
+  - 🏷 `exiftool` for image metadata
+  - 📜 `strings` command for document analysis
+  - 🔎 `FOCA` for bulk metadata extraction
 
-### 🔹 Command Reference Table
-| Technique | Command |
-|-----------|---------|
-| **SQL Injection** | `sqlmap -u 'http://target.com?id=1' --dbs` |
-| **Remote Code Execution (RCE)** | `msfconsole -x 'use exploit/multi/http/struts2_code_exec'` |
-| **Command Injection** | `; cat /etc/passwd` |
-| **Path Traversal** | `../../../../etc/passwd` |
-| **Brute Forcing FTP** | `hydra -L users.txt -P passwords.txt ftp://target.com` |
-| **Brute Forcing SMB** | `crackmapexec smb target.com -u userlist.txt -p passlist.txt` |
-| **Enumerating SMB Shares** | `smbmap -H target.com -u user -p pass` |
-| **Enumerating Linux RPC Services** | `rpcclient -U "" target.com` |
-| **Intercepting Traffic (MITM)** | `ettercap -T -M arp:remote /target_ip/ /gateway_ip/` |
-| **Evil Twin Attack (Wi-Fi Hijacking)** | `airgeddon` |
+---
+
+## 🚀 Active Reconnaissance
+**🎯 Goal:** Probe the target to gather technical data.
+
+### 🛠 Techniques:
+- **🖥 Port Scanning:**
+  - 🎯 `nmap -sV -A target.com`
+  - 🚀 `masscan -p1-65535 --rate=10000 target.com`
+  - ⚡ `rustscan -a target.com`
+- **🌐 DNS Enumeration:**
+  - 🖥 `dig axfr @ns1.target.com`
+  - 🛠 `dnsrecon -d target.com`
+  - 🔍 `fierce -dns target.com`
+  - 🏷 `knockpy target.com`
+  - 📡 `dnscan -d target.com`
+  - 🔍 `nslookup -type=any target.com`
+  - 🖥 `host -a target.com`
+  - 🔎 `recon-ng` (DNS modules)
+  - 🛠 `enumall.sh target.com` (Combines multiple DNS enumeration tools)
+- **📡 Network Mapping:**
+  - 🌍 `traceroute target.com`
+  - 🔎 `netdiscover -r 192.168.1.0/24`
+  - 🛠 `arp-scan -l`
+  - 📡 `hping3 -S target.com -p 80`
+  - 🔍 `mtr target.com`
+  - 🏷 `ip route show`
+  - 🚀 `nmap --traceroute target.com`
+  - 🖥 `pathping target.com` (Windows)
+  - 🛠 `ss -tuln` (List open ports on Linux)
+  - 📜 `netstat -an` (Windows alternative for ss)
+- **🌐 Web Reconnaissance:**
+  - 🔎 `whatweb target.com`
+  - 📂 `gobuster dir -u target.com -w wordlist.txt`
+  - 🏛 `waybackurls target.com`
+  - 📡 `dirsearch -u target.com`
+  - 🛠 `wfuzz -c -z file,wordlist.txt --hc 404 target.com/FUZZ`
+  - 🔍 `nikto -h target.com`
+  - 🏷 `wappalyzer -target.com`
+  - 🚀 `arjun -u target.com -m GET`
+  - 📂 `ffuf -u http://target.com/FUZZ -w wordlist.txt`
+- **📧 Email & Credential Harvesting:**
+  - 🕵️‍♂️ `holehe target_email`
+  - 📡 `hunter.io`
+  - 🔐 `Have I Been Pwned (HIBP)` API
+
+---
+
+## 🔧 Recon Tools
+| 🏷 Category       | 🛠 Tool            | ⚡ Command Example |
+|----------------|----------------|-----------------|
+| OSINT         | theHarvester    | `theHarvester -d target.com -b google` |
+| OSINT         | Shodan          | `shodan search target.com` |
+| OSINT         | Censys          | `censys search target.com` |
+| OSINT         | Maltego         | Graph-based OSINT tool |
+| OSINT         | FOCA            | Metadata extraction |
+| OSINT         | OSINT Framework | `https://osintframework.com/` |
+| Subdomains    | Sublist3r       | `sublist3r -d target.com` |
+| Subdomains    | Amass           | `amass enum -d target.com` |
+| Port Scanning | Nmap            | `nmap -sC -sV -A target.com` |
+| Port Scanning | RustScan        | `rustscan -a target.com` |
+| Network Scan  | Netdiscover     | `netdiscover -r 192.168.1.0/24` |
+| DNS Enum      | DNSRecon        | `dnsrecon -d target.com` |
+| Web Recon     | WhatWeb         | `whatweb target.com` |
+| Web Recon     | Gobuster        | `gobuster dir -u target.com -w wordlist.txt` |
+| Web Recon     | Nikto           | `nikto -h target.com` |
+| Email Recon   | Holehe          | `holehe target_email` |
+| Email Recon   | Hunter.io       | Web-based search |
+
+---
 
 ## 🎯 Final Thoughts
-Initial access is the first major step in an attack chain. Using a combination of social engineering, exploitation, and misconfiguration abuse, attackers can gain a foothold. Defensive measures like MFA, patching, network segmentation, and user awareness training are crucial to mitigate these threats. 🛡
+Reconnaissance is a critical step in ethical hacking and penetration testing. Using both passive and active recon techniques effectively helps in crafting a better attack strategy while remaining undetected. Keeping up with the latest tools and methodologies enhances effectiveness in information gathering. 🛡
 
