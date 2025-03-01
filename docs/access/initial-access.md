@@ -1,4 +1,4 @@
-# Reconnaissance Notes
+# Reconnaissance 
 
 ## 📌 Introduction
 Reconnaissance (Recon) is the first phase of an attack where information about the target is gathered. It is crucial for identifying potential attack vectors.
