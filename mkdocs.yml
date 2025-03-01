@@ -54,7 +54,7 @@ nav:
   - Home: index.md
   - Red Teaming:
       - recon: recon/Reconnaissance.md
-      - Exploitation: red-teaming/exploitation.md
+      - access: access/initial-access.md
       - Privilege Escalation: red-teaming/privesc.md
   - Web Exploitation:
       - SQL Injection: web-exploitation/sql-injection.md
