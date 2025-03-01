@@ -1,3 +1,68 @@
-site_name: Cybersecurity Notes
+site_name: Red Team Notes
+site_url: https://red-team-notes.pages.dev 
+repo_url: https://github.com/Lordsofzzzz/Red-Team-Notes  
 theme:
-  name: material  
+  name: material
+  palette:
+    - scheme: slate  # Enables dark mode
+      primary: red
+      accent: deep-orange
+      toggle:
+        icon: material/weather-sunny
+        name: Switch to light mode
+    - scheme: default
+      primary: red
+      accent: deep-orange
+      toggle:
+        icon: material/weather-night
+        name: Switch to dark mode
+  font:
+    text: Roboto
+    code: Roboto Mono
+  icon:
+    repo: fontawesome/brands/github  # GitHub icon in top-right
+  features:
+    - navigation.tabs
+    - navigation.indexes
+    - navigation.top
+    - search.suggest
+    - search.highlight
+    - content.code.annotate
+
+extra:
+  generator: false 
+  social:
+    - icon: fontawesome/brands/github
+      link: https://github.com/Lordsofzzzz
+      name: GitHub
+
+markdown_extensions:
+  - admonition  # Adds note/warning/tip boxes
+  - pymdownx.highlight  # Syntax highlighting for code
+  - pymdownx.superfences  # Code block improvements
+  - pymdownx.emoji  # Adds emoji support
+  - pymdownx.tilde  # Strikethrough text
+  - pymdownx.tasklist  # Task lists [ ] / [x]
+
+plugins:
+  - search  # Enables site-wide search
+  - offline  # Allows offline browsing
+  - privacy  # Improves privacy settings
+  - table-reader  # Better table rendering
+
+nav:
+  - Home: index.md
+  - Red Teaming:
+      - Enumeration: red-teaming/enumeration.md
+      - Exploitation: red-teaming/exploitation.md
+      - Privilege Escalation: red-teaming/privesc.md
+  - Web Exploitation:
+      - SQL Injection: web-exploitation/sql-injection.md
+      - XSS: web-exploitation/xss.md
+      - CSRF: web-exploitation/csrf.md
+  - OSINT: osint.md
+  - Tools:
+      - Nmap: tools/nmap.md
+      - Burp Suite: tools/burp-suite.md
+      - Metasploit: tools/metasploit.md
+  - About: about.md
