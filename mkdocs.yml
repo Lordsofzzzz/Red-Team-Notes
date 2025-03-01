@@ -53,7 +53,7 @@ plugins:
 nav:
   - Home: index.md
   - Red Teaming:
-      - Enumeration: red-teaming/enumeration.md
+      - recon: recon/Reconnaissance.md
       - Exploitation: red-teaming/exploitation.md
       - Privilege Escalation: red-teaming/privesc.md
   - Web Exploitation:
