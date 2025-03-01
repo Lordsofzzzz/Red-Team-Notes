@@ -1,0 +1,2 @@
+mkdocs
+mkdocs-material  # Optional, for Material theme
